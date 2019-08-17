@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Teacher>
+
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Read Teacher";
+    ViewData["Title"] = title;
+}
+
+<h3>
+    <a asp-action="Create" class="btn btn-sm btn-primary">Create</a>
+</h3>
+
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Total Students</th>
+            <th>Salary</th>
+            <th>Created At</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr>
+                <td colspan="7" class="text-center">No Model Data</td>
+            </tr>
+        }
+        else
+        {
+            @foreach(var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.Id</td>
+                    <td>@teacher.Name</td>
+                    <td>@teacher.Skills</td>
+                    <td>@string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C2}", teacher.Salary)</td>
+                    <td>@string.Format("{0:dddd, dd MMMM yyyy}", teacher.CreatedAt)</td>
+                    <td>
+                        <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@teacher.Id">Update</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@teacher.Id" method="post">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
